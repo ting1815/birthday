@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Happy Birthday JC - Mobile Legends Gaming</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap');
+        
+        * {
+            font-family: 'Exo 2', sans-serif;
+        }
+        
+        .game-title {
+            font-family: 'Orbitron', monospace;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f1419 0%, #1a237e 50%, #283593 100%);
+            background-attachment: fixed;
+        }
+        
+        .ml-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+            border: 2px solid rgba(251, 191, 36, 0.5);
+            box-shadow: 
+                0 0 20px rgba(251, 191, 36, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .ml-button {
+            background: linear-gradient(145deg, #1e40af, #3b82f6);
+            border: 2px solid #60a5fa;
+            box-shadow: 
+                0 0 15px rgba(59, 130, 246, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .ml-button:hover {
+            box-shadow: 
+                0 0 25px rgba(59, 130, 246, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .ml-button-gold {
+            background: linear-gradient(145deg, #f59e0b, #fbbf24);
+            border: 2px solid #fcd34d;
+            color: #1f2937;
+            box-shadow: 
+                0 0 15px rgba(251, 191, 36, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .ml-button-gold:hover {
+            box-shadow: 
+                0 0 25px rgba(251, 191, 36, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .ml-button-red {
+            background: linear-gradient(145deg, #dc2626, #ef4444);
+            border: 2px solid #fca5a5;
+            color: white;
+        }
+        
+        .hero-glow {
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+        }
+        
+        .text-glow {
+            text-shadow: 
+                0 0 10px currentColor,
+                0 0 20px currentColor,
+                0 0 30px currentColor;
+        }
+        
+        .level-badge {
+            background: linear-gradient(145deg, #dc2626, #ef4444);
+            border: 2px solid #fca5a5;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+        
+        .stat-bar {
+            background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-area {
+            position: relative;
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            min-height: 400px;
+            overflow: hidden;
+        }
+        
+        .target {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #fbbf24, #f59e0b);
+            border: 3px solid #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            animation: float 2s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+        }
+        
+        .target:hover {
+            transform: scale(1.1);
+        }
+        
+        .candle {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(to top, #fbbf24, #f59e0b);
+            border-radius: 15px 15px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .candle::before {
+            content: '🔥';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+        
+        .candle.blown {
+            background: linear-gradient(to top, #6b7280, #9ca3af);
+            opacity: 0.5;
+        }
+        
+        .candle.blown::before {
+            content: '💨';
+        }
+        
+        .memory-card {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #1e40af, #3b82f6);
+            border: 2px solid #60a5fa;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .memory-card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .memory-card.matched {
+            background: linear-gradient(145deg, #059669, #10b981);
+            border-color: #6ee7b7;
+        }
+        
+        .particles {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #fbbf24, transparent);
+            border-radius: 50%;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(120deg); }
+            66% { transform: translateY(-5px) rotate(240deg); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(251, 191, 36, 0.6);
+            }
+        }
+        
+        .pulse-border {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .message-panel {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
+            border: 2px solid rgba(251, 191, 36, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hit-effect {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: hitExpand 0.5s ease-out forwards;
+        }
+        
+        @keyframes hitExpand {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+    </style>
+<script src="https://lib.youware.com/youware-lib.1747145198.js" id="yourware-lib"></script></head>
+<body class="min-h-screen text-white relative overflow-x-hidden">
+    <!-- Floating Particles -->
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="particles" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+        <div class="particles" style="top: 20%; right: 20%; animation-delay: 1s;"></div>
+        <div class="particles" style="bottom: 30%; left: 25%; animation-delay: 2s;"></div>
+        <div class="particles" style="bottom: 15%; right: 15%; animation-delay: 0.5s;"></div>
+        <div class="particles" style="top: 50%; left: 10%; animation-delay: 1.5s;"></div>
+        <div class="particles" style="top: 70%; right: 30%; animation-delay: 2.5s;"></div>
+    </div>
+
+    <!-- Top Header -->
+    <div class="relative z-10 py-4 px-6">
+        <div class="flex items-center justify-between max-w-6xl mx-auto">
+            <div class="flex items-center space-x-4">
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+                    <span class="text-sm font-bold">ML</span>
+                </div>
+                <span class="game-title text-xl font-bold text-yellow-400">Birthday Gaming Quest</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="level-badge px-3 py-1 rounded-full text-sm font-bold">
+                    AGE 33
+                </div>
+                <div class="text-yellow-400 text-sm">🎮 Game Mode</div>
+                <div id="totalScore" class="text-yellow-400 text-sm font-bold">
+                    Score: 0
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-6 py-8">
+        <!-- Title Section -->
+        <div class="text-center mb-8">
+            <h1 class="game-title text-4xl md:text-6xl font-black text-yellow-400 text-glow mb-4">
+                HAPPY BIRTHDAY JC!
+            </h1>
+            <div class="flex items-center justify-center space-x-2 text-blue-300">
+                <span class="text-lg">Gaming Challenge</span>
+                <div class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                <span class="text-lg">33rd Level Up</span>
+            </div>
+        </div>
+
+        <!-- Game Selection -->
+        <div id="gameMenu" class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="ml-card rounded-2xl p-6 text-center">
+                <div class="text-4xl mb-4">🎯</div>
+                <h3 class="text-xl font-bold text-yellow-400 mb-2">Target Practice</h3>
+                <p class="text-gray-300 mb-4">Use Granger's skills to hit moving targets!</p>
+                <button onclick="startTargetGame()" class="ml-button px-6 py-2 rounded-xl font-bold text-white">
+                    Play Now
+                </button>
+            </div>
+            
+            <div class="ml-card rounded-2xl p-6 text-center">
+                <div class="text-4xl mb-4">🧠</div>
+                <h3 class="text-xl font-bold text-yellow-400 mb-2">Memory Match</h3>
+                <p class="text-gray-300 mb-4">Match pairs of birthday symbols!</p>
+                <button onclick="startMemoryGame()" class="ml-button px-6 py-2 rounded-xl font-bold text-white">
+                    Play Now
+                </button>
+            </div>
+            
+            <div class="ml-card rounded-2xl p-6 text-center">
+                <div class="text-4xl mb-4">🕯️</div>
+                <h3 class="text-xl font-bold text-yellow-400 mb-2">Candle Rush</h3>
+                <p class="text-gray-300 mb-4">Blow out all birthday candles quickly!</p>
+                <button onclick="startCandleGame()" class="ml-button px-6 py-2 rounded-xl font-bold text-white">
+                    Play Now
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Area -->
+        <div id="gameArea" class="hidden mb-8">
+            <div class="ml-card rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 id="gameTitle" class="text-2xl font-bold text-yellow-400">Game Title</h3>
+                    <div class="flex items-center space-x-4">
+                        <div id="gameScore" class="text-yellow-400 font-bold">Score: 0</div>
+                        <div id="gameTimer" class="text-blue-300">Time: 30s</div>
+                        <button onclick="endGame()" class="ml-button-red px-4 py-2 rounded-lg text-sm">
+                            End Game
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="gameCanvas" class="game-area rounded-xl relative">
+                    <!-- Game content will be dynamically added here -->
+                </div>
+                
+                <div id="gameInstructions" class="mt-4 text-center text-gray-300">
+                    Game instructions will appear here
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero & Message Section -->
+        <div class="grid lg:grid-cols-2 gap-8 items-start">
+            <!-- Granger Hero Card -->
+            <div class="ml-card rounded-2xl p-6 pulse-border">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-yellow-400">Featured Hero</h3>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                        <span class="text-sm text-gray-300">Birthday Legend</span>
+                    </div>
+                </div>
+                
+                <div class="relative mb-6">
+                    <img src="images/resized_photo.jpg" 
+                         alt="Granger Birthday Special" 
+                         class="w-full h-80 object-cover rounded-xl hero-glow">
+                    <div class="absolute top-4 left-4 bg-gradient-to-r from-purple-600 to-pink-600 px-3 py-1 rounded-full text-sm font-bold">
+                        🎉 Birthday Special
+                    </div>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-blue-300">Hero:</span>
+                        <span class="text-yellow-400 font-bold">Granger</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-blue-300">Gaming Level:</span>
+                        <span id="heroLevel" class="text-yellow-400 font-bold">33</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-blue-300">Games Completed:</span>
+                        <span id="gamesCompleted" class="text-green-400 font-bold">0/3</span>
+                    </div>
+                </div>
+
+                <!-- Game Stats -->
+                <div class="mt-6 space-y-3">
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-blue-300">Gaming Skills</span>
+                            <span id="skillLevel" class="text-yellow-400">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div id="skillBar" class="stat-bar h-2 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-blue-300">Birthday Spirit</span>
+                            <span class="text-yellow-400">MAX</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="stat-bar h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Birthday Message Panel -->
+            <div class="ml-card rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-yellow-400">Special Reward</h3>
+                    <div class="text-sm text-blue-300">💌 Unlock with Gaming</div>
+                </div>
+
+                <div id="messagePreview" class="text-center py-8">
+                    <div class="text-6xl mb-4">🏆</div>
+                    <p class="text-lg text-gray-300 mb-4">Complete all 3 games to unlock your special birthday message!</p>
+                    <div class="text-sm text-yellow-400">Progress: <span id="gameProgress">0/3</span> Games</div>
+                </div>
+
+                <div id="birthdayMessage" class="hidden fade-in">
+                    <div class="message-panel rounded-xl p-6 border-2 border-yellow-400/50">
+                        <div class="text-center mb-4">
+                            <span class="text-2xl">💌</span>
+                            <h4 class="text-lg font-bold text-yellow-400 mt-2">特别的话给特别的你</h4>
+                        </div>
+                        
+                        <div class="space-y-4 text-base leading-relaxed">
+                            <p class="text-gray-200">
+                                生日快乐！🎉希望你不只是今天快乐，而是每天都被快乐追着跑～还有，身体要照顾好哦，要是倒下了，谁来让我玩弄呢？嘻嘻～
+                            </p>
+                            <p class="text-gray-200">
+                                好吧，最重要的还是身体健康，健康比什么都重要哦！谢谢你出现在我的生命里，带来了很多欢乐和特别的回忆。也希望我也能成为你生活中那一份小小的快乐～
+                            </p>
+                            <p class="text-gray-200">
+                                认识你几年了，越来越觉得你是个很特别的人。虽然你有时候不太爱表达，但我知道你心思细腻、有目标，偶尔呆呆的却很吸引我。
+                            </p>
+                            <p class="text-yellow-300 font-semibold text-lg">
+                                未来的路，希望你一切都顺顺利利，越来越好，无论遇到什么事，everything will be okay. 💪✨
+                            </p>
+                        </div>
+                        
+                        <div class="text-center mt-6 text-3xl">
+                            🎈🎂🎁🌟💝🎊🎉🌈
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievement Section -->
+        <div class="mt-8">
+            <h3 class="text-2xl font-bold text-yellow-400 mb-4 text-center">Birthday Achievements</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div id="achievement1" class="ml-card rounded-xl p-4 text-center opacity-50">
+                    <div class="text-3xl mb-2">🎯</div>
+                    <div class="text-lg font-bold text-yellow-400">Sharpshooter</div>
+                    <div class="text-sm text-gray-300">Complete Target Practice</div>
+                </div>
+                <div id="achievement2" class="ml-card rounded-xl p-4 text-center opacity-50">
+                    <div class="text-3xl mb-2">🧠</div>
+                    <div class="text-lg font-bold text-yellow-400">Memory Master</div>
+                    <div class="text-sm text-gray-300">Complete Memory Match</div>
+                </div>
+                <div id="achievement3" class="ml-card rounded-xl p-4 text-center opacity-50">
+                    <div class="text-3xl mb-2">🕯️</div>
+                    <div class="text-lg font-bold text-yellow-400">Candle Extinguisher</div>
+                    <div class="text-sm text-gray-300">Complete Candle Rush</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Victory Overlay -->
+    <div id="victoryOverlay" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center">
+        <div class="text-center text-white">
+            <div class="game-title text-6xl md:text-8xl font-black text-yellow-400 text-glow mb-4">
+                🎉 LEGENDARY! 🎉
+            </div>
+            <div class="text-2xl text-blue-300 mb-4">
+                All Games Completed Successfully!
+            </div>
+            <div class="text-lg text-gray-300">
+                Your special birthday message has been unlocked! 🌟
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let totalScore = 0;
+        let gamesCompleted = 0;
+        let currentGame = null;
+        let gameTimer = null;
+        let gameTime = 30;
+        let gameScore = 0;
+        
+        // Game state tracking
+        const gameStates = {
+            target: false,
+            memory: false,
+            candle: false
+        };
+
+        // Update UI elements
+        function updateUI() {
+            document.getElementById('totalScore').textContent = `Score: ${totalScore}`;
+            document.getElementById('gamesCompleted').textContent = `${gamesCompleted}/3`;
+            document.getElementById('gameProgress').textContent = `${gamesCompleted}/3`;
+            
+            const skillPercent = Math.min((gamesCompleted / 3) * 100, 100);
+            document.getElementById('skillLevel').textContent = `${Math.round(skillPercent)}%`;
+            document.getElementById('skillBar').style.width = `${skillPercent}%`;
+            
+            if (gamesCompleted === 3) {
+                unlockMessage();
+            }
+        }
+
+        function unlockMessage() {
+            document.getElementById('messagePreview').classList.add('hidden');
+            document.getElementById('birthdayMessage').classList.remove('hidden');
+            document.getElementById('victoryOverlay').classList.remove('hidden');
+            createMegaConfetti();
+            
+            setTimeout(() => {
+                document.getElementById('victoryOverlay').classList.add('hidden');
+            }, 4000);
+        }
+
+        // Target Practice Game
+        function startTargetGame() {
+            currentGame = 'target';
+            document.getElementById('gameMenu').classList.add('hidden');
+            document.getElementById('gameArea').classList.remove('hidden');
+            document.getElementById('gameTitle').textContent = '🎯 Granger\'s Target Practice';
+            document.getElementById('gameInstructions').textContent = 'Click the golden targets before they disappear! Score 10 hits to win!';
+            
+            gameScore = 0;
+            gameTime = 45;
+            updateGameUI();
+            
+            const canvas = document.getElementById('gameCanvas');
+            canvas.innerHTML = '';
+            
+            let targets = 0;
+            let hits = 0;
+            const maxTargets = 15;
+            
+            function spawnTarget() {
+                if (targets >= maxTargets || hits >= 10) return;
+                
+                const target = document.createElement('div');
+                target.className = 'target';
+                target.style.left = Math.random() * (canvas.offsetWidth - 50) + 'px';
+                target.style.top = Math.random() * (canvas.offsetHeight - 50) + 'px';
+                
+                target.addEventListener('click', function() {
+                    hits++;
+                    gameScore += 100;
+                    updateGameUI();
+                    
+                    // Hit effect
+                    const effect = document.createElement('div');
+                    effect.className = 'hit-effect';
+                    effect.style.left = target.style.left;
+                    effect.style.top = target.style.top;
+                    canvas.appendChild(effect);
+                    
+                    target.remove();
+                    setTimeout(() => effect.remove(), 500);
+                    
+                    if (hits >= 10) {
+                        endGame(true);
+                    }
+                });
+                
+                canvas.appendChild(target);
+                targets++;
+                
+                setTimeout(() => {
+                    if (target.parentNode) {
+                        target.remove();
+                    }
+                }, 3000);
+            }
+            
+            const spawnInterval = setInterval(() => {
+                if (targets < maxTargets && hits < 10 && gameTime > 0) {
+                    spawnTarget();
+                } else {
+                    clearInterval(spawnInterval);
+                }
+            }, 1000);
+            
+            startGameTimer();
+        }
+
+        // Memory Match Game
+        function startMemoryGame() {
+            currentGame = 'memory';
+            document.getElementById('gameMenu').classList.add('hidden');
+            document.getElementById('gameArea').classList.remove('hidden');
+            document.getElementById('gameTitle').textContent = '🧠 Birthday Memory Match';
+            document.getElementById('gameInstructions').textContent = 'Match all pairs of birthday symbols!';
+            
+            gameScore = 0;
+            gameTime = 60;
+            updateGameUI();
+            
+            const canvas = document.getElementById('gameCanvas');
+            canvas.innerHTML = '';
+            canvas.style.display = 'grid';
+            canvas.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            canvas.style.gap = '10px';
+            canvas.style.padding = '20px';
+            
+            const symbols = ['🎂', '🎁', '🎈', '🎉', '🕯️', '🌟', '💝', '🎊'];
+            const cards = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
+            
+            let flippedCards = [];
+            let matchedPairs = 0;
+            
+            cards.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.symbol = symbol;
+                card.textContent = '?';
+                
+                card.addEventListener('click', function() {
+                    if (flippedCards.length < 2 && !card.classList.contains('flipped') && !card.classList.contains('matched')) {
+                        card.classList.add('flipped');
+                        card.textContent = symbol;
+                        flippedCards.push(card);
+                        
+                        if (flippedCards.length === 2) {
+                            setTimeout(() => {
+                                if (flippedCards[0].dataset.symbol === flippedCards[1].dataset.symbol) {
+                                    flippedCards.forEach(c => {
+                                        c.classList.add('matched');
+                                        c.classList.remove('flipped');
+                                    });
+                                    matchedPairs++;
+                                    gameScore += 200;
+                                    updateGameUI();
+                                    
+                                    if (matchedPairs === 8) {
+                                        endGame(true);
+                                    }
+                                } else {
+                                    flippedCards.forEach(c => {
+                                        c.classList.remove('flipped');
+                                        c.textContent = '?';
+                                    });
+                                }
+                                flippedCards = [];
+                            }, 1000);
+                        }
+                    }
+                });
+                
+                canvas.appendChild(card);
+            });
+            
+            startGameTimer();
+        }
+
+        // Candle Rush Game
+        function startCandleGame() {
+            currentGame = 'candle';
+            document.getElementById('gameMenu').classList.add('hidden');
+            document.getElementById('gameArea').classList.remove('hidden');
+            document.getElementById('gameTitle').textContent = '🕯️ Birthday Candle Rush';
+            document.getElementById('gameInstructions').textContent = 'Blow out all 20 candles as fast as you can!';
+            
+            gameScore = 0;
+            gameTime = 30;
+            updateGameUI();
+            
+            const canvas = document.getElementById('gameCanvas');
+            canvas.innerHTML = '';
+            
+            let candlesBlown = 0;
+            const totalCandles = 20;
+            
+            for (let i = 0; i < totalCandles; i++) {
+                const candle = document.createElement('div');
+                candle.className = 'candle';
+                candle.style.left = (i % 10) * 60 + 50 + 'px';
+                candle.style.top = Math.floor(i / 10) * 100 + 100 + 'px';
+                
+                candle.addEventListener('click', function() {
+                    if (!candle.classList.contains('blown')) {
+                        candle.classList.add('blown');
+                        candlesBlown++;
+                        gameScore += 50;
+                        updateGameUI();
+                        
+                        if (candlesBlown >= totalCandles) {
+                            endGame(true);
+                        }
+                    }
+                });
+                
+                canvas.appendChild(candle);
+            }
+            
+            startGameTimer();
+        }
+
+        function startGameTimer() {
+            gameTimer = setInterval(() => {
+                gameTime--;
+                updateGameUI();
+                
+                if (gameTime <= 0) {
+                    endGame(false);
+                }
+            }, 1000);
+        }
+
+        function updateGameUI() {
+            document.getElementById('gameScore').textContent = `Score: ${gameScore}`;
+            document.getElementById('gameTimer').textContent = `Time: ${gameTime}s`;
+        }
+
+        function endGame(won = false) {
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+            
+            if (won && !gameStates[currentGame]) {
+                gameStates[currentGame] = true;
+                gamesCompleted++;
+                totalScore += gameScore;
+                
+                // Light up achievement
+                if (currentGame === 'target') {
+                    document.getElementById('achievement1').style.opacity = '1';
+                } else if (currentGame === 'memory') {
+                    document.getElementById('achievement2').style.opacity = '1';
+                } else if (currentGame === 'candle') {
+                    document.getElementById('achievement3').style.opacity = '1';
+                }
+                
+                createConfetti();
+            }
+            
+            document.getElementById('gameArea').classList.add('hidden');
+            document.getElementById('gameMenu').classList.remove('hidden');
+            updateUI();
+        }
+
+        // Confetti effects
+        function createConfetti() {
+            const colors = ['#fbbf24', '#3b82f6', '#ef4444', '#10b981', '#8b5cf6'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-10px';
+                    confetti.style.width = '8px';
+                    confetti.style.height = '8px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.pointerEvents = 'none';
+                    confetti.style.zIndex = '1000';
+                    confetti.style.transition = 'all 3s ease-out';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.style.top = '100vh';
+                        confetti.style.transform = 'rotate(720deg)';
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.parentNode.removeChild(confetti);
+                        }
+                    }, 3000);
+                }, i * 30);
+            }
+        }
+
+        function createMegaConfetti() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createConfetti(), i * 200);
+            }
+        }
+
+        // Initialize
+        updateUI();
+        
+        // Add some initial confetti on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                createConfetti();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
